@@ -1,15 +1,9 @@
 @ECHO OFF
 
-:downloadvm
-IF NOT EXIST .\.cache\devarch.ova (
-	ECHO Downloading DevArch VM...
-	wget.exe "http://devarch.d0t.co/devarch.ova" -O .\.cache\devarch.ova
-)
-
 :downloadvms
 IF NOT EXIST .\.cache\vboxvmssetup.exe (
 	ECHO Downloading VMBoxService...
-	wget.exe "http://downloads.sourceforge.net/project/vboxvmservice/vboxvmservice/Versions%205.x/VBoxVmService-5.1-Plum.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fvboxvmservice%2Ffiles%2F&ts=1481094961&use_mirror=jaist" -O .\.cache\vboxvmssetup.exe
+	wget.exe "https://sourceforge.net/projects/vboxvmservice/files/latest/download?source=files" -O .\.cache\vboxvmssetup.exe
 )
 
 :downloadnfs
@@ -30,7 +24,7 @@ SET USER=%USERPROFILE:~9%
 SET /P PASS="Please insert your Windows login password (don't worry this is temporary): "
 > C:\vms\VBoxVmService.ini (
 @echo.[Settings]
-@echo.VBOX_USER_HOME=C:\Users\haziman\.VirtualBox
+@echo.VBOX_USER_HOME=C:\Users\%USER%\.VirtualBox
 @echo.RunWebService=no
 @echo.PauseShutdown=5000
 @echo.RunAsUser=.\%USER%

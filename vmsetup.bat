@@ -1,6 +1,10 @@
 @ECHO OFF
 
 SET VboxDir=%hasVBoxManage:~0,-14%
+IF NOT EXIST .\.cache\devarch.ova (
+	ECHO Downloading DevArch VM...
+	wget.exe "http://devarch.d0t.co/devarch.ova" -O .\.cache\devarch.ova
+)
 
 ECHO Loading devarch.ova...
 VBoxManage import .\.cache\devarch.ova --dry-run
