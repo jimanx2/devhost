@@ -20,8 +20,8 @@ IF "%hasVbox%" == "" ECHO It seems that VirtualBox has not been installed. Insta
 
 ECHO VirtualBox: %hasVbox% [PASS]
 
-FOR /f "tokens=*" %%a IN ('where VBoxManage.exe ^|find "VBoxManage"') DO SET hasVboxManage=%%a
-IF %ERRORLEVEL% GTR 0 (
+where VBoxManage.exe |find "VBoxManage"
+IF %ERRORLEVEL% NEQ 0 (
 	ECHO VBoxManage.exe is not in PATH! [FAIL]
 	GOTO :fail
 ) ELSE (
