@@ -21,7 +21,7 @@ Naturo.....
 Sasukeee.....
 (inaudible)
 
-Actually I just got a development laptop (migrated from Apple macbook pro because of... you know -- reasons), and my nature of work needs
+Actually I just got a Windows development laptop (migrated from Apple macbook pro because of... you know -- reasons), and my nature of work needs
 me to develop on unix environments (Ruby-on-Rails, Python, nodejs et cetera et cetera) and I already know that i can use VM to do that.
 But i'd hate to have the VM running on foreground. Thus, I merged some ready-made tools (not by me, i just make the VM) into a package that
 everyone can use without much hassle.
