@@ -8,6 +8,10 @@ Develop on Windows like you are on Linux/OSX
 3. Lots of Net Speed (Minimum 1MB/s)
 4. Lots of Patience
 
+# how to use?
+
+Download this repo as ZIP, extract to somewhere you prefer, then run setup.bat (in elevated console)
+
 # flashback
 
 Sasukeeeee....
