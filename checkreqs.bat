@@ -6,10 +6,10 @@ FOR /f %%a IN ('wmic ComputerSystem get TotalPhysicalMemory ^|findstr /V /n "Tot
 SET pmem=%pmem:~2%
 
 ECHO|SET /P=Physical Memory: %pmem%
-IF NOT [%pmem%] GTR [2147483648] (
+IF NOT [%pmem%] GTR [4294967296] (
 	ECHO [FAIL]
 	ECHO Your physical memory is not enough. Have you been eating ants lately? 
-	ECHO Just kidding. You should upgrade your RAM to at least 6GB [FAIL]
+	ECHO Just kidding. You should upgrade your RAM to at least 4GB.
 	GOTO :fail
 )
 ECHO. [PASS]
@@ -20,8 +20,8 @@ IF "%hasVbox%" == "" ECHO It seems that VirtualBox has not been installed. Insta
 
 ECHO VirtualBox: %hasVbox% [PASS]
 
-FOR /f "tokens=*" %%a IN ('where VBoxManage.exe') DO SET hasVboxManage=%%a
-IF hasVboxManage == "" (
+FOR /f "tokens=*" %%a IN ('where VBoxManage.exe ^|find "VBoxManage"') DO SET hasVboxManage=%%a
+IF %ERRORLEVEL% GTR 0 (
 	ECHO VBoxManage.exe is not in PATH! [FAIL]
 	GOTO :fail
 ) ELSE (
