@@ -31,6 +31,9 @@ IF %ERRORLEVEL% GTR 0 (
 	goto :exit
 ) ELSE (
 	ECHO All installation done^^^! Enjoy developing on Windows^^^!
+	ECHO Just to make sure everything works, let's reboot.
+	SET /P Reboot="Reboot? (y/n)"
+	IF "!Reboot!" == "y" SHUTDOWN /r /t 00
 )
 
 :exit

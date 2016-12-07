@@ -37,7 +37,10 @@ SET /P PASS="Please insert your Windows login password (don't worry this is temp
 ECHO C:\Users\%USER% -public > "C:\Program Files\nfsd\exports"
 ECHO Installing VmBoxService service...
 C:\vms\VmServiceControl.exe -i >nul
-ECHO Creating HOST entry
+ECHO Adding Firewall entry for: HaneWIN NFS Server...
+netsh advfirewall firewall add rule name="nfsd" dir=in action=allow program="C:\Program Files\nfsd\nfsd.exe"
+netsh advfirewall firewall add rule name="haneWIN Portmap Daemon" dir=in action=allow program="C:\Program Files\nfsd\pmapd.exe"
+ECHO Creating HOST entry...
 ECHO 192.168.90.100 devhost >> C:\Windows\System32\drivers\etc\hosts
 
 :finish
