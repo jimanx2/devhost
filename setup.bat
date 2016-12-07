@@ -1,6 +1,10 @@
 @ECHO OFF
 
 SETLOCAL EnableDelayedExpansion
+FOR /F "tokens=2" %%a in ("%CMDCMDLINE%") DO (
+	IF "%%a" == "/c" CALL :showmessage "Please run this script via Elevated Command Prompt." && GOTO :exit
+)
+
 net session 2>nul 1>nul
 IF %ERRORLEVEL% GTR 0 ECHO This script needs to be run as administrator && GOTO :exit
 
@@ -38,3 +42,11 @@ IF %ERRORLEVEL% GTR 0 (
 
 :exit
 ENDLOCAL
+EXIT /B
+
+:showmessage
+> "%TEMP%\TEMPmessage.vbs" (
+	ECHO.MSGBOX %1%
+)
+CALL %TEMP%\TEMPmessage.vbs
+DEL %temp%\TEMPmessage.vbs /f /q
