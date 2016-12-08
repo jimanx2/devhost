@@ -12,6 +12,8 @@ Develop on Windows like you are on Linux/OSX
 
 Download this repo as ZIP, extract to somewhere you prefer, then run setup.bat (in elevated console)
 
+If there's no problem, the VM will be accessible via root@devhost, default password: qwerty
+
 # flashback
 
 Sasukeeeee....
