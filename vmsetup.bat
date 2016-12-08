@@ -29,8 +29,12 @@ ECHO Setting up network interface...
 VBoxManage hostonlyif ipconfig "%newif%" --ip 192.168.90.253 --netmask 255.255.255.0
 IF %ERRORLEVEL% GTR 0 GOTO :fail
 
-VBoxManage dhcpserver add --ifname "%newif%" --ip 192.168.90.254 --netmask 255.255.255.0 --lowerip 192.168.90.100 --upperip 192.168.90.100 --enable
-IF %ERRORLEVEL% GTR 0 GOTO :fail
+FOR /F "tokens=1" %%a IN ('VBoxManage list dhcpservers ^|find "192.168.90.254"') DO SET DhcpReady=%%a
+)
+IF "%DhcpReady%" NEQ "IP:" (
+	VBoxManage dhcpserver add --ifname "%newif%" --ip 192.168.90.254 --netmask 255.255.255.0 --lowerip 192.168.90.100 --upperip 192.168.90.100 --enable
+	IF %ERRORLEVEL% GTR 0 GOTO :fail
+)
 
 VBoxManage modifyvm devarch_1 --nic1 nat --nic2 hostonly --nictype1 Am79C973 --nictype2 Am79C973 --hostonlyadapter2 "%newif%"
 IF %ERRORLEVEL% GTR 0 GOTO :fail

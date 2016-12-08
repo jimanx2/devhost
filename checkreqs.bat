@@ -14,18 +14,25 @@ IF NOT [%pmem%] GTR [4294967296] (
 )
 ECHO. [PASS]
 
-FOR /f "tokens=4" %%a IN ('cscript psinfo.vbs ^|find "VirtualBox"') DO SET hasVbox=%%a
-
-IF "%hasVbox%" == "" ECHO It seems that VirtualBox has not been installed. Install VirtualBox first and re-run this script [FAIL] && GOTO :fail
+FOR /f "tokens=4" %%a IN ('cscript psinfo.vbs ^|find "VirtualBox"') DO (
+	SET hasVbox=%%a
+	IF "%%a" NEQ "" SET VboxVer=!hasVbox:~0,3!
+)
+IF "%hasVbox%" == "" (
+	ECHO It seems that VirtualBox has not been installed. Install VirtualBox first and re-run this script [FAIL] && GOTO :fail
+) ELSE (
+	IF ["%VboxVer%"] LSS ["5.1"] ECHO Your virtualbox version is too low. Need version 5.1 and above [FAIL] && GOTO :fail
+)
 
 ECHO VirtualBox: %hasVbox% [PASS]
 
-where VBoxManage.exe |find "VBoxManage"
-IF %ERRORLEVEL% NEQ 0 (
+FOR /F "tokens=*" %%a IN ('where VBoxManage.exe') DO SET VboxManage=%%a
+IF "%VBoxManage%" EQU "" (
 	ECHO VBoxManage.exe is not in PATH! [FAIL]
 	GOTO :fail
 ) ELSE (
-	ECHO VBoxManage.exe is in PATH! [PASS]
+	ECHO VBoxManage.exe: %VboxManage% [PASS]
+	verify >nul
 )
 
 GOTO :success

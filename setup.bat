@@ -19,7 +19,17 @@ IF %ERRORLEVEL% GTR 0 (
 )
 
 FOR /F "tokens=*" %%a IN ('VBoxManage list vms ^|find "devarch_1"') DO SET haveVm=%%a
-IF NOT "%haveVm%" == "" ECHO VM already installed. Exiting. && GOTO :exit
+ECHO %haveVm%
+IF NOT "%haveVm%" == "" (
+	ECHO VM already installed.
+	SET /P Response="Force Reinstall? (y/n)"
+	IF "!Response!" NEQ "y" (
+		GOTO :exit
+	) ELSE (
+		CALL uninstall.bat
+		IF %ERRORLEVEL% GTR 0 ECHO An error occurred while uninstalling existing components. && GOTO :exit
+	)
+)
 
 call vmsetup.bat
 IF %ERRORLEVEL% GTR 0 (

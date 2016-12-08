@@ -14,9 +14,9 @@ IF NOT EXIST .\.cache\nfs1222.exe (
 
 :setup
 ECHO Installing VMBoxService...
-.\.cache\vboxvmssetup.exe /SILENT /LOG=vmboxvmssetup.log /SP-
+.\.cache\vboxvmssetup.exe /SILENT /SP- /SUPPRESSMSGBOXES /NORESTART /LOG=vmboxvmssetup.log
 ECHO Installing HaneWIN NFS Server...
-.\.cache\nfs1222.exe /SILENT /LOG=nfs1222.log /SP-
+.\.cache\nfs1222.exe /SILENT /SP- /SUPPRESSMSGBOXES /NORESTART /LOG=nfs1222.log
 verify >nul
 
 :config
