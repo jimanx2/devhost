@@ -13,7 +13,8 @@ IF %ERRORLEVEL% GTR 0 ECHO FAIL && GOTO :fail
 ECHO DONE
 
 ECHO|SET /P="Removing devarch VM..."
-FOR /F "tokens=8-12" %a IN ('VBoxManage showvminfo devarch_1 ^|find "NIC 2:"') DO SET hostonlyif=%a %b %c %d %e
+FOR /F "tokens=8-12" %%a IN ('VBoxManage showvminfo devarch_1 ^|find "NIC 2:"') DO SET hostonlyif=%a %b %c %d %e
+
 IF %ERRORLEVEL% GTR 0 ECHO FAIL && GOTO :fail
 VBoXManage hostonlyif remove %hostonlyif:~1,-2%
 IF %ERRORLEVEL% GTR 0 ECHO FAIL && GOTO :fail

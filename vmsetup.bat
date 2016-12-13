@@ -1,8 +1,44 @@
 @ECHO OFF
 
+SET FORCEDOWNLOADVM=0
+
+:downloadvm
 IF NOT EXIST .\.cache\devarch.ova (
 	ECHO Downloading DevArch VM...
 	wget.exe "http://devarch.d0t.co/devarch.ova" -O .\.cache\devarch.ova
+)
+
+IF "%FORCEDOWNLOADVM%" EQU "1" (
+	ECHO Downloading DevArch VM...
+	wget.exe "http://devarch.d0t.co/devarch.ova" -O .\.cache\devarch.ova
+)
+
+ECHO Verifying downloaded VM...
+pushd .cache
+FOR /F "tokens=1" %%i IN ('..\md5sum devarch.ova') DO SET MD5SUM=%%i
+IF %ERRORLEVEL% GTR 0 (
+	ECHO Failed to verify downloaded VM...
+	SET /P response="Would you like to redownload VM file? (y/n) "
+	IF "!response!" == "y" (
+		SET FORCEDOWNLOADVM=1
+		GOTO :downloadvm
+	) ELSE (
+		ECHO Installation cannot proceed without valid VM file. Exit
+		GOTO :finish
+	)
+)
+popd
+
+IF "%MD5SUM%" NEQ "1f1bb7769f0cab7f3189581943a1c3d1" (
+	ECHO MD5 Checksum Failed!
+	SET /P response="Would you like to redownload VM file? (y/n) "
+	IF "!response!" == "y" (
+		SET FORCEDOWNLOADVM=1
+		GOTO :downloadvm
+	) ELSE (
+		ECHO Installation cannot proceed without valid VM file. Exit
+		GOTO :finish
+	)
 )
 
 ECHO Loading devarch.ova...

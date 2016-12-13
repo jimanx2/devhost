@@ -22,7 +22,7 @@ FOR /F "tokens=*" %%a IN ('VBoxManage list vms ^|find "devarch_1"') DO SET haveV
 ECHO %haveVm%
 IF NOT "%haveVm%" == "" (
 	ECHO VM already installed.
-	SET /P Response="Force Reinstall? (y/n)"
+	SET /P Response="Force Reinstall? (y/n) "
 	IF "!Response!" NEQ "y" (
 		GOTO :exit
 	) ELSE (
