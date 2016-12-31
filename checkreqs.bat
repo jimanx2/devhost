@@ -4,9 +4,14 @@ FOR /f %%a IN ('wmic ComputerSystem get TotalPhysicalMemory ^|findstr /V /n "Tot
 	SET pmem=%%a
 )
 SET pmem=%pmem:~2%
+SET rmem=4294967296
+set "tmp_pmem=               %num1%"
+set "tmp_rmem=               %num2%"
+set pad1="%tmp_pmem:~-15%"
+set pad2="%tmp_rmem:~-15%"
 
 ECHO|SET /P=Physical Memory: %pmem%
-IF NOT [%pmem%] GTR [4294967296] (
+IF NOT [%pad1%] GTR [%pad2%] (
 	ECHO [FAIL]
 	ECHO Your physical memory is not enough. Have you been eating ants lately? 
 	ECHO Just kidding. You should upgrade your RAM to at least 4GB.
