@@ -37,7 +37,7 @@ IF "%MD5SUM%" NEQ "1f1bb7769f0cab7f3189581943a1c3d1" (
 		GOTO :downloadvm
 	) ELSE (
 		ECHO Installation cannot proceed without valid VM file. Exit
-		GOTO :finish
+		GOTO :fail
 	)
 )
 
@@ -78,6 +78,7 @@ IF %ERRORLEVEL% GTR 0 GOTO :fail
 GOTO :finish
 
 :fail
+SET ERRORLEVEL=4
 EXIT /B %ERRORLEVEL%
 
 :quit
